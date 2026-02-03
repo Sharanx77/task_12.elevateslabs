@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Glassmorphic Gallery</title>
+    <style>
+        :root {
+            --primary-accent: #00d2ff;
+            --secondary-accent: #3a7bd5;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --bg-dark: #0f0c29;
+            --gradient-bg: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--gradient-bg);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .header h1 {
+            font-weight: 200;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin: 0;
+            background: linear-gradient(to right, #00d2ff, #91ff00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* The Grid */
+        .gallery-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-auto-rows: 250px;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            cursor: pointer;
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-color: var(--primary-accent);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(30%);
+            transition: 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            filter: grayscale(0%);
+        }
+
+        /* Modal Overlay */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(15px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-container {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .modal-img-wrapper {
+            background: var(--glass);
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            max-width: 100%;
+            max-height: 75vh;
+            border-radius: 10px;
+            display: block;
+        }
+
+        /* UI Elements */
+        .close-btn, .nav-btn {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: white;
+            cursor: pointer;
+            backdrop-filter: blur(5px);
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: -60px;
+            right: 0;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 24px;
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 30px;
+        }
+
+        .prev-btn { left: -80px; }
+        .next-btn { right: -80px; }
+
+        .nav-btn:hover, .close-btn:hover {
+            background: var(--primary-accent);
+            color: #000;
+        }
+
+        #caption {
+            margin-top: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+        }
+
+        /* Mobile Fixes */
+        @media (max-width: 768px) {
+            .nav-btn { width: 45px; height: 45px; top: auto; bottom: -80px; transform: none; }
+            .prev-btn { left: 20%; }
+            .next-btn { right: 20%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Atmosphere Gallery</h1>
+    </div>
+
+    <div class="gallery-wrapper" id="gallery">
+        </div>
+
+    <div id="imageModal" class="modal">
+        <div class="modal-container">
+            <button class="close-btn">&times;</button>
+            <button class="nav-btn prev-btn">&#8249;</button>
+            <button class="nav-btn next-btn">&#8250;</button>
+            
+            <div class="modal-img-wrapper">
+                <img class="modal-content" id="fullImage">
+            </div>
+            <div id="caption"></div>
+        </div>
+    </div>
+
+    <script>
+        const galleryData = [
+            { id: 1011, title: "Lakeside Serenity" },
+            { id: 1012, title: "Cyberpunk City" },
+            { id: 1013, title: "White Cliffs" },
+            { id: 1014, title: "Golden Hour" },
+            { id: 1015, title: "Valley Mist" },
+            { id: 1016, title: "Deep Forest" }
+        ];
+
+        const gallery = document.getElementById('gallery');
+        const modal = document.getElementById('imageModal');
+        const fullImg = document.getElementById('fullImage');
+        const caption = document.getElementById('caption');
+        let currentIndex = 0;
+
+        // 1. Build Gallery Dynamically
+        galleryData.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = 'gallery-item';
+            div.innerHTML = `<img src="https://picsum.photos/id/${item.id}/800/600" alt="${item.title}">`;
+            div.onclick = () => openModal(index);
+            gallery.appendChild(div);
+        });
+
+        // 2. Advanced Modal Logic
+        function openModal(index) {
+            currentIndex = index;
+            updateModal();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function updateModal() {
+            const item = galleryData[currentIndex];
+            // Adding a fade effect during source change
+            fullImg.style.opacity = '0';
+            setTimeout(() => {
+                fullImg.src = `https://picsum.photos/id/${item.id}/1200/800`;
+                caption.innerText = item.title;
+                fullImg.style.opacity = '1';
+            }, 200);
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function navigate(direction) {
+            currentIndex += direction;
+            if (currentIndex >= galleryData.length) currentIndex = 0;
+            if (currentIndex < 0) currentIndex = galleryData.length - 1;
+            updateModal();
+        }
+
+        // 3. Complex Event Handling
+        document.querySelector('.close-btn').onclick = closeModal;
+        document.querySelector('.next-btn').onclick = (e) => { e.stopPropagation(); navigate(1); };
+        document.querySelector('.prev-btn').onclick = (e) => { e.stopPropagation(); navigate(-1); };
+        
+        modal.onclick = (e) => { if(e.target === modal) closeModal(); };
+
+        window.onkeydown = (e) => {
+            if (!modal.classList.contains('active')) return;
+            if (e.key === "Escape") closeModal();
+            if (e.key === "ArrowRight") navigate(1);
+            if (e.key === "ArrowLeft") navigate(-1);
+        };
+    </script>
+</body>
+</html>

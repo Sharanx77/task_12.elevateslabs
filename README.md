@@ -1,6 +1,6 @@
-# 🖼️ Horizon Gallery | Interactive Image Portfolio - Task 12
+# 🖼️ Horizon Gallery | Live API & Infinite Scroll Portfolio - Task 12
 
-**A high-performance, responsive image gallery featuring a custom-built modal system, fluid animations, and a focus on UX/UI best practices.**
+**A professional, high-performance image discovery engine powered by the Pexels API, featuring infinite scroll, real-time search, and a glassmorphic UI.**
 
 ### 🔴 **Live Demo:** [Click Here to View](https://sharanx77.github.io/task_12.elevateslabs/)
 
@@ -8,25 +8,27 @@
 
 ## 🚀 About The Project
 
-**"Horizon Gallery"** was developed for the **Elevate Labs Web Development Internship (Task 12)**. This project moves beyond static layouts to implement dynamic **State Management** using JavaScript. It demonstrates how to handle user interactions—such as clicking, keyboard navigation, and scroll-locking—to create a seamless viewing experience.
+**"Horizon Gallery"** was developed for the **Elevate Labs Web Development Internship (Task 12)**. What began as a static layout has evolved into a dynamic **Single Page Application (SPA)** that interacts with external cloud databases. This project demonstrates advanced JavaScript concepts, including asynchronous programming (fetch API), intersection observers for high-performance UI, and complex state management.
 
 
 
 ### 🎯 Key Features
-* **Custom Modal Engine:** A handcrafted JavaScript system that dynamically updates content based on the user's selection without page reloads.
-* **Smart Interaction:** Includes background overlay focusing, auto-scroll prevention when viewing images, and a "Click-to-Exit" backdrop.
-* **Keyboard Accessibility:** Full support for the "ESC" key to close the modal, making it user-friendly for all navigation styles.
-* **Glassmorphic UI:** A modern design aesthetic using CSS backdrop-filters and smooth scale-up transitions on hover.
-* **Responsive Grid:** Utilizes CSS Grid with auto-fit logic to ensure the gallery looks perfect on everything from wide monitors to mobile screens.
+* **Live API Integration:** Dynamically fetches high-resolution imagery from the **Pexels API** based on user queries.
+* **Infinite Scroll Engine:** Implements the **Intersection Observer API** to detect the bottom of the page and automatically load more content for a seamless "endless" experience.
+* **Real-Time Search:** A custom filtering system that allows users to explore specific themes (e.g., "Cyberpunk", "Nature", "Architecture") instantly without reloading the page.
+* **Custom Modal System:** A handcrafted JavaScript lightbox that handles high-res image previews, background scroll-locking, and keyboard accessibility.
+* **Glassmorphic UI:** A modern aesthetic utilizing `backdrop-filter: blur`, CSS Grid, and fluid animations to provide a premium user experience.
 
 ---
 
 ## 🧰 Tech Stack
 
-* **HTML5:** Semantic structure for accessibility and SEO.
-* **CSS3:** Advanced positioning, z-index management, and keyframe animations.
-* **JavaScript (ES6):** Event listeners, DOM manipulation, and style toggling for modal states.
-* **Development Tools:** VS Code for local development and GitHub Pages for hosting.
+* **HTML5 & CSS3:** Semantic markup and advanced styling (Flexbox/Grid, Glassmorphism).
+* **JavaScript (ES6+):** * **Asynchronous JS:** `async/await` and `fetch` for API communication.
+    * **Intersection Observer API:** For high-performance infinite scrolling.
+    * **DOM Manipulation:** Dynamic rendering of API-sourced content.
+* **Pexels API:** The engine providing professional photography data.
+* **Development Tools:** VS Code, Git, and GitHub Pages for deployment.
 
 ---
 
@@ -35,37 +37,38 @@
 /Task_12_Image_Gallery
 ├── index.html      # Main Structure & Modal Markup
 ├── style.css       # Layout, Glassmorphism, & Animation Definitions
-└── script.js       # Modal Logic & Keyboard Support
+└── script.js       # API Integration, Infinite Scroll, & Modal Logic
 
 ---
 
 ## 🛠️ Technical Implementation Details
-This project fulfills all requirements for Task 12:
+This project fulfills and exceeds all requirements for Task 12:
 
-* **Grid Layout:** Implemented a robust grid using `display: grid`.
-* **Dynamic Content:** Used JS to swap the `src` and `alt` attributes of the modal image instantly.
-* **Focus Management:** Implemented `overflow: hidden` on the body tag to lock scrolling while the modal is active.
-* **Animation:** Smooth entry and exit transitions using CSS `opacity` and `transform`.
+* **API Management:** Securely handling headers and authorization for external requests.
+* **Intersection Observer:** Optimized the "Loading Sentinel" to trigger data fetches only when needed, reducing unnecessary API calls.
+* **Dynamic Content Swap:** Used JS to swap the `src` and photographer metadata in the modal instantly.
+* **Accessibility & UX:** Implemented "ESC" key support to exit modals and locked the body scroll to maintain user focus.
 
 ---
 
 ## 🔮 Future Roadmap
-* **Phase 2:** Implement an **Infinite Scroll** feature that loads more images as the user reaches the bottom.
-* **Phase 3:** Add **Lightbox Controls** (Next/Previous arrows) to navigate images within the modal.
-* **Phase 4:** Integrate the **Unsplash API** to pull high-resolution professional photography dynamically.
+* ✅ **Phase 1:** (Completed) Infinite Scroll & API Integration.
+* 🔄 **Phase 2:** Implement **Local Storage** to allow users to "Favorite" images.
+* 🔄 **Phase 3:** Add a **Download Engine** to save high-res versions directly from the modal.
+* 🔄 **Phase 4:** Transition to **React.js** for more scalable component management.
 
 ---
 
 ## 👨‍💻 Author
 **B Sharana Basava** *Electronics and Communication Engineering Student*
 
-* **LinkedIn:** [B Sharana Basava](https://www.linkedin.com/in/b-sharana-basava-b4313a325)
+* **LinkedIn:** [B Sharana Basava](https://www.linkedin.com/in/b-sharanabasava/)
 * **GitHub:** [Sharanx77](https://github.com/Sharanx77)
 * **Email:** [b.sharanabasava2006@gmail.com](mailto:b.sharanabasava2006@gmail.com)
 
 ---
 
 ## 🙌 Acknowledgments
-* **Elevate Labs** for the structured learning path.
-* **Picsum Photos** for providing the high-quality placeholder images.
-* **Gemini AI** for code optimization and UX design assistance.
+* **Elevate Labs** for the structured learning path and challenges.
+* **Pexels** for providing the high-quality professional photography API.
+* **Gemini AI** for code optimization, architectural guidance, and UX assistance.
